@@ -18,28 +18,29 @@ router.get('/', function(req, res){
 router.post('/', function(req, res){
     var newItem = new Item();
     newItem.category = req.body.category;
+    newItem.image = req.body.image;
     newItem.price = req.body.price;
     newItem.rating = req.body.rating;
     newItem.posted_by = req.body.posted_by;
-    newItem.date = Date.now;
+    newItem.posted_date = Date.now;
     newItem.save(function(err, item){
         if(err) {
-            res.send('error saving item');
+            res.json({success:"false",message:"error while adding"});
         } else {
             console.log(item);
-            res.send(item);
+            res.json({success:"true",message:"item updated"});
         }
     });
 });
 
 router.patch('/:id', function(req, res){
     console.log('getting all items');
-    Item.findOneAndUpdate({_id:"5eef91ec6e965c595df000ae"}, {$set:{ email:"updatedemail@gmail.com"}},function(err, items){
+    Item.findOneAndUpdate({_id:req.params.id}, {$set:{ price:req.body.price}},function(err, items){
         if(err) {
-            res.send('error has occured');
+            res.json({success:"false",message:"error while updating"});
         } else {
             console.log(items);
-            res.json(items);
+            res.json({success:"true",message:"item updated"});
         }
     });
 });
@@ -49,7 +50,7 @@ router.delete('/:id', function(req, res){
         _id: req.params.id
     },function(err, item){
         if(err) {
-            res.send('error deleting book');
+            res.send('error while deleting');
         } else {
             console.log(book);
             res.json({success:"true",message:"item deleted"});
