@@ -10,10 +10,10 @@ export default function Routes() {
     return (
         <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/host" exact component = {HostSignUp}/>
-            <Route path="/user" exact component = {UserSignUp}/>
-            <Route path="/hostlogin" exact component = {HostLogin}/>
-            <Route path="/userlogin" exact component = {UserLogin}/>
+            <Route path="/host" exact render={(props) => <HostSignUp {...props}/>}/>
+            <Route path="/user" exact render={(props) => <UserSignUp {...props}/>}/>
+            <Route path="/hostlogin" exact render={(props) => <HostLogin {...props}/>}/>
+            <Route path="/userlogin" exact render={(props) => <UserLogin {...props}/>}/>
         </Switch>
     )
 }

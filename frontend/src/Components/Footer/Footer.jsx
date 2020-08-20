@@ -46,19 +46,19 @@ export class Footer extends Component {
                         </div>
                         <div className={styles.social_cont}>
                             <div>
-                                <i class="fa fa-facebook" aria-hidden="true"></i>
+                                <i className="fa fa-facebook" aria-hidden="true"></i>
                             </div>
                             <div>
-                                <i class="fa fa-twitter" aria-hidden="true"></i>
+                                <i className="fa fa-twitter" aria-hidden="true"></i>
                             </div>
                             <div>
-                                <i class="fa fa-instagram" aria-hidden="true"></i>
+                                <i className="fa fa-instagram" aria-hidden="true"></i>
                             </div>
                             <div>
-                                <i class="fa fa-pinterest" aria-hidden="true"></i>
+                                <i className="fa fa-pinterest" aria-hidden="true"></i>
                             </div>
                             <div>
-                                <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                                <i className="fa fa-youtube-play" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>
