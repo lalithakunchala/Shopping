@@ -7,7 +7,7 @@ import  "./Navbar.css";
 export class NavBar extends Component {
     render() {
         return (
-            <React.Fragment>
+            <div style={{background:"lightgrey"}}>
             <Navbar collapseOnSelect expand="lg" >
                 <Navbar.Brand>
                 <div className="himage">
@@ -34,7 +34,7 @@ export class NavBar extends Component {
                   </Nav>
                 </Navbar.Collapse>
               </Navbar>
-</React.Fragment>
+</div>
             )
     }
 }

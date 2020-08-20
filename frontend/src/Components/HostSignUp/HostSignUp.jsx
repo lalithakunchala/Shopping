@@ -1,46 +1,72 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import styles from './HostSignUp.module.css'
+import NavBar from '../Navbar/NavBar.jsx';
+import Footer from '../Footer/Footer.jsx';
 
 export class HostSignUp extends Component {
+
+    constructor(props){
+        super(props)
+        this.state = {
+            password:false,
+            email:"",
+            enter:false
+        }
+    }
+    
+    handleChange = (e)=>{
+        this.setState({
+            email:e.target.value
+        })
+    }
+
+    handlePassword = ()=>{
+        if(this.state.email!==""){
+            this.setState({
+                password:true
+            })
+            this.props.fetchRecovery(this.state.email)
+        }
+        else{
+            this.setState({
+                enter:true
+            })
+        }
+        
+    }
     render() {
         return (
             <div>
-                <div className="modal fade" id="registermodal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered modal-sm">
-                <div className="modal-content" id="logincontent">
-                    <div className="modal-header">
-                        <div></div>
-                        <h5 className="modal-title text-center h3 font-weight-lighter" id="registermodalLabel">Sign Up</h5>
-                        <button type="button btn-lg" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" className="close-text">&times;</span>
-                        </button>
-                    </div>
-                    <div className="modal-body">
-                        
-                        <div id="login-separator">
-                            or with your email
-                        </div>
-                        <form id="login-form">
-                            <small className="form-text text-danger">{local_message !== ""?local_message:null}</small>
-                            <div className="form-group">
-                                <input type="text" value={firstname} onChange={handleFirstname} class="form-control" placeholder="Firstname" />
-                            </div>
-                            
-                            <div className="form-group">
-                                <input type="email" value={email} onChange={handleEmail} class="form-control" placeholder="Email" />
-                            </div>
-                            <div className="form-group">
-                                <input type="password" value={password} onChange={handlePassword} class="form-control" placeholder="Password" />
-                            </div>
-                            <button className="btn btn-block btn-danger" onClick={handleSubmit}>Sign Up</button>
-                        </form>
-                    </div>
-                    <div className="modal-footer">
-
-                    </div>
+                <div className={styles.bgWhite}>
+                <NavBar />
                 </div>
-            </div>
-        </div>
+                <div>
+                    <div className={styles.cardPadding}>
+                    {!this.state.password?
+                        <div className={styles.cardBody}>
+                        <div class="card-header" style={{background:"#CA005D"}}>
+                        <h3 className={styles.forgot}>Host SignUp</h3>
+                        </div>
+                        <div class="card text-center" >
+                        <div class="card-body">
+                            <p class="card-text text-center">Enter Details</p>
+                            <input type="text" placeholder="name" onChange={this.handleChange} className=" p-2 w-100"></input><br/>
+                            <input type="text" placeholder="email" onChange={this.handleChange} className=" p-2 w-100"></input><br/>
+                            <input type="text" placeholder="password" onChange={this.handleChange} className=" p-2 w-100"></input><br/>
+                            <button className={styles.btnCss} onClick={this.handlePassword}>Reset Password</button>
+                        </div>
+                        {this.state.enter?<div style={{color:'red'}}>Enter all details</div>:""}
+                        </div>
+                        </div>
+                        :
+                        <div style={{padding:"170px"}}>
+                        <h5 className=" p-3 bg-light text-success" >{}</h5>
+                        </div>
+                    }                   
+                    </div>
+                    <Footer />
+                </div>
             </div>
         )
     }
