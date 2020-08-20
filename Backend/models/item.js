@@ -1,34 +1,30 @@
-import { Schema, model } from 'mongoose';
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-// Create Schema
 const ItemSchema = new Schema({
-  category: {
-    type: String,
-    required: true
-  },
-  price: {
-    type: Number,
-    required: true,
-    unique: true
-  },
-  rating: {
-    type: Number,
-    required: true,
-    unique: true
-  },
-  image: {
-    type: String,
-    required: true
-  },
-  posted_date: {
-    type: Date,
-    default: Date.now
-  },
-  posted_by: {
-    type: string,
-  }
-});
+    category: {
+      type: String,
+      required: true
+    },
+    price: {
+      type: Number,
+      required: true
+    },
+    rating: {
+      type: Number,
+      required: true,
+    },
+    image: {
+      type: String,
+      required: true
+    },
+    posted_date: {
+      type: Date,
+      default: Date.now
+    },
+    posted_by: {
+      type: String,
+    }
+  });
 
-const User = model('item', ItemSchema);
-
-export default Item;
+module.exports = mongoose.model('item', ItemSchema);

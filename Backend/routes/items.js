@@ -1,5 +1,6 @@
 var express = require('express');
 var Item = require('../models/item');
+const jwt = require("jsonwebtoken");
 var router = express.Router();
 
 
@@ -16,21 +17,37 @@ router.get('/', function(req, res){
 });
 
 router.post('/', function(req, res){
-    var newItem = new Item();
-    newItem.category = req.body.category;
-    newItem.image = req.body.image;
-    newItem.price = req.body.price;
-    newItem.rating = req.body.rating;
-    newItem.posted_by = req.body.posted_by;
-    newItem.posted_date = Date.now;
-    newItem.save(function(err, item){
-        if(err) {
-            res.json({success:"false",message:"error while adding"});
-        } else {
-            console.log(item);
-            res.json({success:"true",message:"item updated"});
+
+    if (req.headers.authorization) {
+        jwt.verify(
+          req.headers.authorization.replace("Bearer ", ""),
+          "secret_key",
+          function (err, tokenUserData) {
+              console.log(tokenUserData)
+            if (err) {
+              return res.sendStatus(403);
+            }
+    
+            else {
+
+                var newItem = new Item();
+                newItem.category = req.body.category;
+                newItem.image = req.body.image;
+                newItem.price = req.body.price;
+                newItem.rating = req.body.rating;
+                newItem.posted_by = tokenUserData.email;
+                newItem.save(function(err, item){
+                if(err) {
+                    res.json({success:"false",message:"error while adding"});
+                } else {
+                    console.log(item);
+                    res.json({success:"true",message:"item added"});
+                }
+            });
         }
-    });
+    })
+}
+
 });
 
 router.patch('/:id', function(req, res){
@@ -52,8 +69,10 @@ router.delete('/:id', function(req, res){
         if(err) {
             res.send('error while deleting');
         } else {
-            console.log(book);
+            console.log(item);
             res.json({success:"true",message:"item deleted"});
         }
     });
 });
+
+module.exports = router;

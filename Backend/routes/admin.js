@@ -1,11 +1,13 @@
 var express = require("express");
-var User = require("../models/user");
+var Admin = require("../models/admin");
+var router = express.Router();
 const jwt = require("jsonwebtoken");
-
 var router = express.Router();
 
+
+//admin login
 router.post("/login", function (req, res) {
-  User.find({ email: req.body.email, password: req.body.password }).exec(
+  Admin.find({ email: req.body.email, password: req.body.password }).exec(
     function (err, user) {
       if (err) {
         res.status(500).json({ message: "error has occured", succes: false });
@@ -31,24 +33,27 @@ router.post("/login", function (req, res) {
   );
 });
 
+
+//admin registration
 router.post("/register", function (req, res) {
-  User.find({ email: req.body.email }).exec(function (err, user) {
+  Admin.find({ email: req.body.email }).exec(function (err, user) {
     if (err) {
       res.status(500).json({ message: "error has occured", succes: false });
     } else {
       if (user.length && user[0].email) {
         res.status(200).json({ message: "user already exists", succes: false });
       } else {
-        var newUser = new User();
-        newUser.username = req.body.username;
+        var newUser = new Admin();
+        newUser.name = req.body.name;
         newUser.email = req.body.email;
         newUser.password = req.body.password;
         
    
-     newUser.save(function (err, book) {
+     newUser.save(function (err, admin) {
           if (err) {
             res.status(500).send("error saving user");
           } else {
+            console.log(admin);
             res
               .status(500)
               .json({ message: "successfully registered", succes: true });
