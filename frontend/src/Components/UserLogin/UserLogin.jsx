@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import styles from './UserSignUp.module.css'
+import styles from './UserLogin.module.css'
 import NavBar from '../Navbar/NavBar.jsx';
 import Footer from '../Footer/Footer.jsx';
 
-export class UserSignUp extends Component {
+export class UserLogin extends Component {
 
     constructor(props){
         super(props)
@@ -46,15 +46,14 @@ export class UserSignUp extends Component {
                     {!this.state.password?
                         <div className={styles.cardBody}>
                         <div class="card-header" style={{background:"#CA005D"}}>
-                        <h3 className={styles.forgot}>User SignUp</h3>
+                        <h3 className={styles.forgot}>User Login</h3>
                         </div>
                         <div class="card text-center" >
                         <div class="card-body">
                             <p class="card-text text-center">Enter Details</p>
-                            <input type="text" placeholder="name" onChange={this.handleChange} className=" p-2 w-100"></input><br/>
                             <input type="text" placeholder="email" onChange={this.handleChange} className=" p-2 w-100"></input><br/>
                             <input type="text" placeholder="password" onChange={this.handleChange} className=" p-2 w-100"></input><br/>
-                            <button className={styles.btnCss} onClick={this.handlePassword}>Reset Password</button>
+                            <button className={styles.btnCss} onClick={this.handlePassword}>Login</button>
                         </div>
                         {this.state.enter?<div style={{color:'red'}}>Enter all details</div>:""}
                         </div>
@@ -80,4 +79,4 @@ const mapDispatchToProps = {
     
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserSignUp)
+export default connect(mapStateToProps, mapDispatchToProps)(UserLogin)

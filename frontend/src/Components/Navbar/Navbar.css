@@ -7,7 +7,7 @@
   }
 
   .fonthomebar{
-    color: #512B1A;
+    color: white;
     padding: 0 15px;
     border-bottom: none;
     display: inline-block;
@@ -23,7 +23,7 @@
   
 #collasible-nav-dropdown{
  
-  color: #512B1A;
+  color: white;
     padding: 0 15px;
     border-bottom: none;
     display: inline-block;
@@ -47,7 +47,7 @@
 .listroom{
   font-size: 0.80em;
   font-weight: bold;
-  color:#512B1A;
+  color:white;
   font-size: .75em;
     line-height: 1.625em;
     letter-spacing: .03em;
