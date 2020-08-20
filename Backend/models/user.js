@@ -15,6 +15,10 @@ const User = new Schema({
     type: String,
     required: true
   },
+  order: {
+    type: Array,
+    default:[]
+  },
   register_date: {
     type: Date,
     default: Date.now
