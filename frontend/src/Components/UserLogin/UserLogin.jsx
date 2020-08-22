@@ -3,13 +3,15 @@ import { connect } from 'react-redux'
 import styles from './UserLogin.module.css'
 import NavBar from '../Navbar/NavBar.jsx';
 import Footer from '../Footer/Footer.jsx';
+import {Redirect} from 'react-router-dom';
+import {fetchUserLogin,logout} from '../../redux/userauth/action'
 
 export class UserLogin extends Component {
 
     constructor(props){
         super(props)
         this.state = {
-            password:false,
+            password:"",
             email:"",
             enter:false
         }
@@ -17,16 +19,14 @@ export class UserLogin extends Component {
     
     handleChange = (e)=>{
         this.setState({
-            email:e.target.value
+            [e.target.name]:e.target.value
         })
     }
 
-    handlePassword = ()=>{
-        if(this.state.email!==""){
-            this.setState({
-                password:true
-            })
-            this.props.fetchRecovery(this.state.email)
+    handleClick = ()=>{
+        if(this.state.email!==""&& this.state.password!==""){
+            
+            this.props.fetchUserLogin(this.state)
         }
         else{
             this.setState({
@@ -36,6 +36,7 @@ export class UserLogin extends Component {
         
     }
     render() {
+        console.log(this.props)
         return (
             <div>
                 <div className={styles.bgWhite}>
@@ -43,7 +44,6 @@ export class UserLogin extends Component {
                 </div>
                 <div>
                     <div className={styles.cardPadding}>
-                    {!this.state.password?
                         <div className={styles.cardBody}>
                         <div class="card-header" style={{background:"#CA005D"}}>
                         <h3 className={styles.forgot}>User Login</h3>
@@ -51,18 +51,18 @@ export class UserLogin extends Component {
                         <div class="card text-center" >
                         <div class="card-body">
                             <p class="card-text text-center">Enter Details</p>
-                            <input type="text" placeholder="email" onChange={this.handleChange} className=" p-2 w-100"></input><br/>
-                            <input type="text" placeholder="password" onChange={this.handleChange} className=" p-2 w-100"></input><br/>
-                            <button className={styles.btnCss} onClick={this.handlePassword}>Login</button>
+                            <input type="text" placeholder="email" name="email" onChange={this.handleChange} className=" p-2 w-100"></input><br/>
+                            <input type="text" placeholder="password" name="password" onChange={this.handleChange} className=" p-2 w-100"></input><br/>
+                            <button className={styles.btnCss} onClick={this.handleClick}>Login</button>
                         </div>
                         {this.state.enter?<div style={{color:'red'}}>Enter all details</div>:""}
                         </div>
                         </div>
                         :
-                        <div style={{padding:"170px"}}>
-                        <h5 className=" p-3 bg-light text-success" >{}</h5>
-                        </div>
-                    }                   
+                        {!this.props.logSuccess.success?<p>{this.props.logSuccess.message}</p>:
+                        <Redirect to="/userDashboard" />
+                    }                  
+                                     
                     </div>
                     <Footer />
                 </div>
@@ -72,11 +72,14 @@ export class UserLogin extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    
+    logSuccess : state.userauth.logSuccess,
+    logUser : state.userauth.logSuccess
 })
 
-const mapDispatchToProps = {
-    
+const mapDispatchToProps = dispatch=>{
+    return {
+        logout: ()=>dispatch(logout()),
+        fetchUserLogin: (n) => dispatch(fetchUserLogin(n))
+      };
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(UserLogin)

@@ -5,6 +5,9 @@ import UserSignUp from '../Components/UserSignUp/UserSignUp'
 import Home from '../Components/Home/Home';
 import HostLogin from '../Components/HostLogin/HostLogin';
 import UserLogin from '../Components/UserLogin/UserLogin';
+import UserDashboard from "../Components/UserDashboard/UserDashboard";
+import AdminDashboard from "../Components/AdminDashboard/AdminDashboard"
+import { AdminCard } from "../Components/AdminCard/AdminCard";
 
 export default function Routes() {
     return (
@@ -14,6 +17,9 @@ export default function Routes() {
             <Route path="/user" exact render={(props) => <UserSignUp {...props}/>}/>
             <Route path="/hostlogin" exact render={(props) => <HostLogin {...props}/>}/>
             <Route path="/userlogin" exact render={(props) => <UserLogin {...props}/>}/>
+            <Route path="/userdashboard" exact render={(props) => <UserDashboard {...props}/>}/>
+            <Route path="/admindashboard" exact render={(props) => <AdminDashboard {...props}/>}/>
+            <Route path="/admincard" exact render = {(props) => <AdminCard {...props} />}/>
         </Switch>
     )
 }

@@ -5,6 +5,7 @@ import NavBarAfterLogin from '../NavBarAfterLogin/NavBarAfterLogin';
 import styles from './Home.module.css'
 import Footer from '../Footer/Footer'
 import {fetchItems} from '../../redux/item/action.js' 
+import UserCard from '../UserCard/UserCard.jsx'
 
 export class Home extends Component {
 
@@ -25,8 +26,7 @@ export class Home extends Component {
         console.log(items)
         return (
             <div>
-                <NavBarAfterLogin />
-                <NavBar />
+                {!this.props.loggedUser?<NavBar />:<NavBarAfterLogin />}
                 
                 <div className={styles.height_img}>
                     <div style={{paddingTop:"200px",paddingRight:"800px"}}>
@@ -37,14 +37,7 @@ export class Home extends Component {
                 <div class="row">
                     <div className ="p-3">
                         {items && items.map(item =>(
-                    <div class="card col-3">
-                        <img src={item.image} class="card-img-top" alt="..."/>
-                        <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
+                            <UserCard image = {item.image}/>
                         ))}
                     </div>
                     </div>
@@ -57,7 +50,8 @@ export class Home extends Component {
 
 const mapStateToProps = state => {
     return{
-    items : state.item.items
+    items : state.item.items,
+    loggedUser : state.userauth.logUser || state.adminauth.logUser
     }
 }
 
