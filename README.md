@@ -1,6 +1,6 @@
 # shopping
 
-![alt text](file:///home/lalithakunchala/sarees.png "Home Screenshot")
+![alt text](https://i.imgur.com/Qpe9Ve2.png "Home Screenshot")
 
 
 ## Table of Contents
