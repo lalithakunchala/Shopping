@@ -13,19 +13,20 @@ router.post("/login", function (req, res) {
       } else {
         if (user.length && user[0].email) {
           const accessToken = jwt.sign(
-            { id: user[0]._id, email: user[0].email },
+            { id: user[0].id, email: user[0].email },
             "secret_key"
           );
 
           res.json({
-            succes: true,
+            success: true,
             message: "loggedin successfully",
-            token: accessToken,
+            order:user[0].order,
+            name:user[0].name
           });
         } else {
           res
             .status(200)
-            .json({ message: "user does not exists", succes: false });
+            .json({ message: "user does not exists", success: false });
         }
       }
     }

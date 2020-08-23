@@ -16,6 +16,61 @@ router.get('/', function(req, res){
     });
 });
 
+router.get('/:id', function(req, res){
+    console.log('getting all items');
+    Item.find({_id:req.params.id}).exec(function(err, items){
+        if(err) {
+            res.send('error has occured');
+        } else {
+            console.log(items);
+            res.json(items);
+        }
+    });
+});
+
+
+router.get('/adminitems/:token', function(req, res){
+    console.log('getting all items');
+    jwt.verify(req.params.token, "secret_key", (err, tokenUserData) => {
+        if (err) {
+            return res.sendStatus(403);
+        }
+        console.log(tokenUserData)
+        Item.find({posted_by:tokenUserData.id}).exec(function(err, items){
+            if(err) {
+                res.send('error has occured');
+            } else {
+                console.log(items);
+                res.json(items);
+            }
+        });
+    })
+})
+    
+    
+//     jwt.verify(
+//         req.headers.authorization.replace("Bearer ", ""),
+//         "secret_key",
+//         function (err, tokenUserData) {
+//             console.log(tokenUserData)
+//           if (err) {
+//             return res.sendStatus(403);
+//           }
+  
+//           else {
+//                 console.log(tokenUserData.id)
+//                 Item.find({posted_by:tokenUserData.id}).exec(function(err, items){
+//                     if(err) {
+//                         res.send('error has occured');
+//                     } else {
+//                         console.log(items);
+//                         res.json(items);
+//                     }
+//                 });
+//             }
+// });
+// });
+
 router.post('/', function(req, res){
 
     if (req.headers.authorization) {
@@ -29,13 +84,13 @@ router.post('/', function(req, res){
             }
     
             else {
-
                 var newItem = new Item();
                 newItem.category = req.body.category;
                 newItem.image = req.body.image;
                 newItem.price = req.body.price;
                 newItem.rating = req.body.rating;
-                newItem.posted_by = tokenUserData.email;
+                newItem.posted_by = tokenUserData.id;
+                console.log("item"+newItem);
                 newItem.save(function(err, item){
                 if(err) {
                     res.json({success:"false",message:"error while adding"});
@@ -47,11 +102,15 @@ router.post('/', function(req, res){
         }
     })
 }
+else{
+    res.json({success:"false",message:"Request error"});
+}
 
 });
 
 router.patch('/:id', function(req, res){
-    console.log('getting all items');
+    console.log('patch backend');
+    console.log(req.params.id,req.body.price);
     Item.findOneAndUpdate({_id:req.params.id}, {$set:{ price:req.body.price}},function(err, items){
         if(err) {
             res.json({success:"false",message:"error while updating"});
@@ -63,6 +122,7 @@ router.patch('/:id', function(req, res){
 });
 
 router.delete('/:id', function(req, res){
+    console.log(req.params.id)
     Item.findByIdAndRemove({
         _id: req.params.id
     },function(err, item){

@@ -12,9 +12,9 @@ router.post("/login", function (req, res) {
       if (err) {
         res.status(500).json({ message: "error has occured", succes: false });
       } else {
-        if (user.length && user[0].email) {
+        if (user.length) {
           const accessToken = jwt.sign(
-            { username: user[0].username, email: user[0].email },
+            { name: user[0].name, id: user[0].id },
             "secret_key"
           );
 
@@ -22,11 +22,12 @@ router.post("/login", function (req, res) {
             succes: true,
             message: "loggedin successfully",
             token: accessToken,
+            name:user[0].name
           });
         } else {
           res
             .status(200)
-            .json({ message: "user does not exists", succes: false });
+            .json({ message: "user does not exists", success: false });
         }
       }
     }

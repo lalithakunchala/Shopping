@@ -19,6 +19,10 @@ const User = new Schema({
     type: Array,
     default:[]
   },
+  role: {
+    type: String,
+    default:"member"
+  },
   register_date: {
     type: Date,
     default: Date.now

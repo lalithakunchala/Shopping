@@ -24,6 +24,7 @@ const ItemSchema = new Schema({
     },
     posted_by: {
       type: String,
+      required: true
     }
   });
 
