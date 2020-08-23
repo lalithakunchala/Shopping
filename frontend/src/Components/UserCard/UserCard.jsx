@@ -14,11 +14,12 @@ export class UserCard extends Component {
     render() {
         return (
             
-                <div class="card col-3">
-                        <img src={this.props.image} class="card-img-top" alt="..."/>
+                <div class="card col-3 " >
+                        <img style={{maxHeight:"300px",minHeight:"300px"}} src={this.props.image} class="card-img-top" alt="..."/>
                         <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <h5 class="card-title">saree</h5>
+                        <h5 className="text-success">Rs: {this.props.price}/-</h5>
+                        {/* <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> */}
                         {this.props.loggedUser?<button onClick={this.handleCart}>Add to cart</button>:""}
                         </div>
                     </div>

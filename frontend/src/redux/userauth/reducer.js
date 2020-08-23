@@ -12,7 +12,8 @@ import {FETCH_USER_REGISTER_FAILURE,FETCH_USER_REGISTER_REQUEST,FETCH_USER_REGIS
     logSuccess:"",
     logUser:"",
     userSuccess:"",
-    userError:""
+    userError:"",
+    token : ""
   };
   
   const reducer = (state = initStore, {type,payload}) => {
@@ -54,6 +55,7 @@ import {FETCH_USER_REGISTER_FAILURE,FETCH_USER_REGISTER_REQUEST,FETCH_USER_REGIS
           ...state,
           logSuccess:payload,
           logUser:payload.name,
+          token:payload.token,
           isLoading: false
         };
 
@@ -91,7 +93,8 @@ import {FETCH_USER_REGISTER_FAILURE,FETCH_USER_REGISTER_REQUEST,FETCH_USER_REGIS
           return{
             ...state,
             logSuccess:"",
-            logUser:""
+            logUser:"",
+            token:""
           }
 
       default:

@@ -7,7 +7,8 @@ import HostLogin from '../Components/HostLogin/HostLogin';
 import UserLogin from '../Components/UserLogin/UserLogin';
 import UserDashboard from "../Components/UserDashboard/UserDashboard";
 import AdminDashboard from "../Components/AdminDashboard/AdminDashboard"
-import { AdminCard } from "../Components/AdminCard/AdminCard";
+import AddItem from "../Components/AddItem/AddItem";
+
 
 export default function Routes() {
     return (
@@ -19,7 +20,7 @@ export default function Routes() {
             <Route path="/userlogin" exact render={(props) => <UserLogin {...props}/>}/>
             <Route path="/userdashboard" exact render={(props) => <UserDashboard {...props}/>}/>
             <Route path="/admindashboard" exact render={(props) => <AdminDashboard {...props}/>}/>
-            <Route path="/admincard" exact render = {(props) => <AdminCard {...props} />}/>
+            <Route path="/additem" exact component={AddItem}/>}/>
         </Switch>
     )
 }

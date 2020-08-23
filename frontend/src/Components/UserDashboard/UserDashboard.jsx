@@ -22,11 +22,13 @@ export class UserDashboard extends Component {
         return (
             <div>
                 <NavBarAfterLogin />
+                <div className="row">
                 {items?
                 items.map((item,index) =>(<div>
-                <UserCard image={item.image} /> 
+                <UserCard image={item.image} price={item.price}/> 
                 </div>))
                 : ""}
+            </div>
             </div>
         )
     }

@@ -29,17 +29,17 @@ export class Home extends Component {
                 {!this.props.loggedUser?<NavBar />:<NavBarAfterLogin />}
                 
                 <div className={styles.height_img}>
-                    <div style={{paddingTop:"200px",paddingRight:"800px"}}>
-                    <h2 className="font-italic text-light justify-content-bottom">Latest Designs<br/>Trendy</h2>
+                    <div style={{paddingTop:"200px",paddingRight:"1100px"}}>
+                    <h1 className=" text-light justify-content-bottom  fnt"><span className={styles.fnt}>Latest Designs<br/>Trendy</span></h1>
                     </div>
                 </div> 
                 <div className="container">
-                <div class="row">
-                    <div className ="p-3">
+                <div class="row p-5">
+                    
                         {items && items.map(item =>(
-                            <UserCard image = {item.image}/>
+                            <UserCard image = {item.image} price={item.price}/>
                         ))}
-                    </div>
+                
                     </div>
                 </div>
                 <Footer /> 

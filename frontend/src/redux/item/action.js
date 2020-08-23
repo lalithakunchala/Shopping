@@ -1,6 +1,60 @@
 import axios from "axios";
-import {FETCH_ITEM_REQUEST,FETCH_ITEM_SUCCESS,FETCH_ITEM_FAILURE,UPDATE_REQUEST,UPDATE_SUCCESS,UPDATE_FAILURE,DELETE_REQUEST,DELETE_SUCCESS,DELETE_FAILURE} from './actionTypes'
+import {ADD_REQUEST,ADD_SUCCESS,ADD_FAILURE,FETCH_ITEM_REQUEST,FETCH_ITEM_SUCCESS,FETCH_ITEM_FAILURE,FETCH_ADMIN_ITEM_REQUEST,FETCH_ADMIN_ITEM_SUCCESS,FETCH_ADMIN_ITEM_FAILURE,UPDATE_REQUEST,UPDATE_SUCCESS,UPDATE_FAILURE,DELETE_REQUEST,DELETE_SUCCESS,DELETE_FAILURE} from './actionTypes'
 
+
+const addRequest = () => {
+  console.log("fetch add request");
+  
+  return {
+    type: ADD_REQUEST,
+    
+  };
+};
+
+const addSuccess = (res) => {
+  // console.log("fetch post success action called"+ res);
+  return {
+    type: ADD_SUCCESS,
+    payload : res
+  };
+};
+
+const addFailure = error => {
+  // console.log("fetch post failure action called");
+  return {
+    type: ADD_FAILURE,
+    payload:error
+    // error: error
+  };
+};
+
+
+const addItem= (n,t) => {
+  var token = t || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibGFsaXRoYSIsImlkIjoiNWYzZGRmOTZjM2VjYzAxOGM0NjI2MDMxIiwiaWF0IjoxNTk4MTY4ODQ5fQ.ugQHHXwqjULYD9jurJsHtH_9CX0ixS64mITWFsQ3CYM"
+  var data = {
+    "category" : n.category,
+    "price" : n.price,
+    "image" : n.image,
+    "rating" : n.rating
+  }
+  var header = {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }
+  console.log("data",data);
+  console.log("token",t)
+  return dispatch => {
+      dispatch(addRequest())
+      return  axios.post(
+          "http://localhost:8000/items",data,header)
+          .then(res=>{
+          console.log("response success", res.data);
+          return dispatch(addSuccess(res.data));
+        })
+        .catch(error => addFailure(error))
+  }
+}
 
 const fetchItemRequest = () => {
   console.log("fetch post request action called");
@@ -43,6 +97,49 @@ const fetchItems= () => {
   }
 }
 
+
+const fetchAdminItemRequest = () => {
+  console.log("fetch post request action called");
+  
+  return {
+    type: FETCH_ADMIN_ITEM_REQUEST,
+    
+  };
+};
+
+const fetchAdminItemSuccess = (res) => {
+  // console.log("fetch post success action called"+ res);
+  return {
+    type: FETCH_ADMIN_ITEM_SUCCESS,
+    payload : res
+  };
+};
+
+const fetchAdminItemFailure = error => {
+  // console.log("fetch post failure action called");
+  return {
+    type: FETCH_ADMIN_ITEM_FAILURE,
+    payload:error
+    // error: error
+  };
+};
+
+
+const fetchAdminItems= (n) => {
+  // console.log("fetch Data called", data);
+  return dispatch => {
+      dispatch(fetchAdminItemRequest())
+      return  axios.get(
+          `http://localhost:8000/items/adminitems/${n}`
+            ).then(res=>{
+          console.log("response success", res.data);
+          return dispatch(fetchAdminItemSuccess(res.data));
+        })
+        .catch(error => fetchAdminItemFailure(error))
+  }
+}
+
+
 const updateRequest = () => {
   console.log("fetch UPDATE request action called");
   
@@ -71,17 +168,17 @@ const updateFailure = error => {
 
 
 const updateItem = (n) => {
-  console.log("fetch Data called", n.id +" "+n.price);
+  console.log("fetch Data called"+ n.id +" "+n.price);
+  var url = `http://localhost:8000/items/${n.id}`;
+  console.log(url);
   return dispatch => {
       dispatch(updateRequest())
-      return  axios.patch(
-          `http://localhost:8000/items/${n.id}`,
-          {
-            price:n.price
-          }
-            ).then(res=>{
+      return  axios.patch(`http://localhost:8000/items/`+n.id,{ price:n.price })
+      .then(res=>{
           console.log("response success", res.data);
-          return dispatch(updateSuccess(res.data));
+          return (
+                dispatch(updateSuccess(res.data))
+          )
         })
         .catch(error => updateFailure(error))
   }
@@ -115,7 +212,7 @@ const deleteFailure = error => {
 
 
 const deleteItem= (id) => {
-  // console.log("fetch Data called", data);
+  console.log("fetch Data called", id);
   return dispatch => {
       dispatch(deleteRequest())
       return  axios.delete(
@@ -128,4 +225,4 @@ const deleteItem= (id) => {
   }
 }
 
-export {fetchItems,updateItem,deleteItem}
+export {fetchItems,updateItem,deleteItem,fetchAdminItems,addItem}
