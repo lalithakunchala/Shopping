@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import NavBarAfterLogin from '../NavBarAfterLogin/NavBarAfterLogin';
 import {logout} from '../../redux/userauth/action'
 import { UserCard } from '../UserCard/UserCard';
-import {fetchItems} from '../../redux/item/action.js'
+import {Redirect} from 'react-router-dom'
+
 
 export class UserDashboard extends Component {
 
@@ -11,38 +12,39 @@ export class UserDashboard extends Component {
         super(props)
     }
     
-    componentDidMount(){
-        this.props.fetchItems()
-    }
-
 
     render() {
+        if(this.props.logSuccess==""){
+            return <Redirect to="/" />
+        }
         console.log(this.props.items)
         const {items} =this.props
         return (
             <div>
                 <NavBarAfterLogin />
-                <div className="row">
-                {items?
-                items.map((item,index) =>(<div>
-                <UserCard image={item.image} price={item.price}/> 
-                </div>))
-                : ""}
+                <div className="container">
+                <div class="row p-5">
+                    
+                        {items && items.map(item =>(
+                            <UserCard image = {item.image} price={item.price} category={item.category}/>
+                        ))}
+                
+                    </div>
+                    </div>
             </div>
-            </div>
+            
         )
     }
 }
 
 const mapStateToProps = (state) => ({
     
-        items : state.item.items
+        items : state.item.items,
+        logSuccess : state.userauth.logSuccess
 })
 
 const mapDispatchToProps = dispatch => {
-    return {
-        fetchItems: (n) => dispatch(fetchItems(n))
-      };
+    
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDashboard)

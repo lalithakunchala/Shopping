@@ -4,16 +4,72 @@ const jwt = require("jsonwebtoken");
 var router = express.Router();
 
 
+// let page = req.query.page && req.query.page > 1 ? req.query.page : 1;
+// let sort = req.query.sort
+// let cat = req.query.category
+// if(cat){
+//     Item.find({category:cat})
+//     .limit(10)
+//     .skip((page - 1) * 10)
+//     .sort({"price":sort})
+//     .exec(function (err, items) {
+//       if (err) {
+//         res.send("error has occured");
+//       } else {
+//         console.log(books);
+//         res.json(items);
+//       }
+//     });
+// }
+// else{
+//   Item.find({})
+//     .limit(10)
+//     .skip((page - 1) * 10)
+//     .sort({"price":sort})
+//     .exec(function (err, items) {
+//       if (err) {
+//         res.send("error has occured");
+//       } else {
+//         console.log(books);
+//         res.json(items);
+//       }
+//     });
+// }
+
+
 router.get('/', function(req, res){
     console.log('getting all items');
-    Item.find({}).exec(function(err, items){
-        if(err) {
-            res.send('error has occured');
-        } else {
-            console.log(items);
-            res.json(items);
+    let page = req.query.page && req.query.page > 1 ? req.query.page : 1;
+        let sort = req.query.sort
+        let cat = req.query.category
+        if(cat){
+            Item.find({category:cat})
+            .limit(10)
+            .skip((page - 1) * 10)
+            .sort({"price":sort})
+            .exec(function (err, items) {
+            if (err) {
+                res.send("error has occured");
+            } else {
+                console.log(items);
+                res.json(items);
+            }
+            });
         }
-    });
+        else{
+        Item.find({})
+            .limit(10)
+            .skip((page - 1) * 10)
+            .sort({"price":sort})
+            .exec(function (err, items) {
+            if (err) {
+                res.send("error has occured");
+            } else {
+                console.log(items);
+                res.json(items);
+            }
+            });
+        }
 });
 
 router.get('/:id', function(req, res){
@@ -23,7 +79,7 @@ router.get('/:id', function(req, res){
             res.send('error has occured');
         } else {
             console.log(items);
-            res.json(items);
+            res.json({data:items,total:items.length});
         }
     });
 });

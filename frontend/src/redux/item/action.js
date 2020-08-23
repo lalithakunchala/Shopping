@@ -83,12 +83,12 @@ const fetchItemFailure = error => {
 };
 
 
-const fetchItems= () => {
+const fetchItems= (n) => {
   // console.log("fetch Data called", data);
   return dispatch => {
       dispatch(fetchItemRequest())
       return  axios.get(
-          "http://localhost:8000/items"
+          `http://localhost:8000/items?page=${n.page}&sort=${n.sort}&category=${n.category}`
             ).then(res=>{
           console.log("response success", res.data);
           return dispatch(fetchItemSuccess(res.data));

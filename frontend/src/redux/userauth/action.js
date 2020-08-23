@@ -131,23 +131,23 @@ const fetchUserFailure = error => {
 };
 
 
- const fetchUser = (data) => {
-  console.log("fetch Data called", data);
-  return dispatch => {
-      dispatch(fetchUserRequest())
-      return  axios.get(`http://localhost:8000/items`, {
-        headers: {
-          'Authorization': `Bearer ${data.token}`
-        }
-      })
+//  const fetchUser = (data) => {
+//   console.log("fetch Data called", data);
+//   return dispatch => {
+//       dispatch(fetchUserRequest())
+//       return  axios.get(`http://localhost:8000/items`, {
+//         headers: {
+//           'Authorization': `Bearer ${data.token}`
+//         }
+//       })
       
-        .then(res=>{
-          console.log("response success", res.data);
-          return dispatch(fetchUserSuccess(res.data));
-        })
-        .catch(error => fetchUserFailure(error.data))
-  }
-}
+//         .then(res=>{
+//           console.log("response success", res.data);
+//           return dispatch(fetchUserSuccess(res.data));
+//         })
+//         .catch(error => fetchUserFailure(error.data))
+//   }
+// }
 
 
 export {
@@ -159,7 +159,7 @@ export {
   fetchUserLoginFailure,
   fetchUserLoginRequest,
   fetchUserLoginSuccess,
-  fetchUser,
+  // fetchUser,
   fetchUserFailure,
   fetchUserRequest,
   fetchUserSuccess,

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import NavBarAfterLogin from '../NavBarAfterLogin/NavBarAfterLogin';
 import {logout} from '../../redux/adminauth/action'
 import {Redirect,Link} from 'react-router-dom'
-import {fetchItems,fetchAdminItems} from '../../redux/item/action.js'
+import {fetchAdminItems} from '../../redux/item/action.js'
 import Footer from '../Footer/Footer'
 import {updateItem,deleteItem} from '../../redux/item/action.js'
 
@@ -22,7 +22,7 @@ export class AdminDashboard extends PureComponent {
         this.props.fetchAdminItems(this.props.logSuccess.token)
     }
 
-    componentWillUpdate(){
+    componentWillUpdate(prev){
         this.props.fetchAdminItems(this.props.logSuccess.token)
     }
 
@@ -90,7 +90,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchItems: (n) => dispatch(fetchItems(n)),
         fetchAdminItems: (n) => dispatch(fetchAdminItems(n)),
         updateItem: (n) => dispatch(updateItem(n)),
         deleteItem: (n) => dispatch(deleteItem(n))
