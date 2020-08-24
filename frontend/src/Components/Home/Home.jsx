@@ -1,32 +1,58 @@
-import React, { Component } from 'react'
+import React, { Component,PureComponent } from 'react'
 import { connect } from 'react-redux'
 import NavBar from '../Navbar/NavBar.jsx';
 import NavBarAfterLogin from '../NavBarAfterLogin/NavBarAfterLogin';
 import styles from './Home.module.css'
 import Footer from '../Footer/Footer'
-import {fetchItems} from '../../redux/item/action.js' 
+import {fetchItems,filter} from '../../redux/item/action.js' 
 import UserCard from '../UserCard/UserCard.jsx'
 
-export class Home extends Component {
+export class Home extends PureComponent {
 
     constructor(props){
         super(props)
         this.state ={
-            sort:"asc",
-            category:"",
-            page:1
+            page:1,
+            ratingFilter:0,
+            costForFilter:0,
+            categoryFilter:"all",
+            initial: true,
+            cat:false
         }
     }
+
     componentDidMount(){
-        console.log("componentdidmount")
-        this.props.fetchItems(this.state)
+        this.props.fetchItems(this.state.page)
+    }
+
+    componentDidUpdate(){
+        console.log("componentdidupdate")
+        console.log(this.props.filterdata)
+        if(this.state.initial!==true){
+            this.props.fetchItems(this.state.page)
+            }
+          else{
+            console.log("initial state");
+            
+          }
     }
 
     handleChange = (e)=>{
         console.log(e.target.value)
+        if(e.target.value=="all"){
+            console.log("all")
+            this.setState({
+                categoryFilter:"silk"||"cotton"||"fancy",
+                cat : false
+            }) 
+        }
+        else{
+            console.log("diff")
         this.setState({
-            [e.target.name]:e.target.value
+            categoryFilter:e.target.value,
+            cat:true
         })
+    }
     }
 
     handlePage = (e)=>{
@@ -35,34 +61,52 @@ export class Home extends Component {
         if(e.target.id==="prev" ){
             if(this.state.page>1){
                 this.setState({page:this.state.page-1})
-                this.props.fetchItems({sort:this.state.sort,category:this.state.category,page:this.state.page-1})
+                this.props.fetchItems(this.state.page-1)
             }  
             
         }
         else if(e.target.id==="next"){
             if(true){
                 this.setState({page:this.state.page+1})
-                this.props.fetchItems({sort:this.state.sort,category:this.state.category,page:this.state.page+1})
+                this.props.fetchItems(this.state.page+1)
             } 
         }
         else{
             this.setState({
                 page:Number(e.target.value)
             })
-            this.props.fetchItems({sort:this.state.sort,category:this.state.category,page:Number(e.target.value)})
+            this.props.fetchItems(Number(e.target.value))
         }
         
     }
 
     handleClick = ()=>{
         console.log(this.state);
-        this.props.fetchItems(this.state)
+        this.props.filter(this.state)
+        this.setState({
+            initial:false 
+        })
     }
+
+    
+      handleRatingChange = rating=>{
+        this.setState({
+          ratingFilter:rating
+        })
+      }
+    
+      handleSort = order=>{
+          console.log(order)
+        this.setState({
+          costForFilter:order
+        })
+      }
 
 
     render() { 
-        
+        var {ratingFilter,categoryFilter,costForFilter} = this.state
         var {items} = this.props
+
         return (
             <div>
                 {!this.props.loggedUser?<NavBar />:<NavBarAfterLogin />}
@@ -73,29 +117,62 @@ export class Home extends Component {
                     </div>
                 </div> 
                 <div className="container">
+
+                <div style={{float:"right",flexDirection:"row",marginLeft:40}}>
+            {" "}
+            Rating{[5,4,3,2].map(rating=>(
+              <button onClick={()=>this.handleRatingChange(rating)}style={{padding:10}}>{rating}</button>
+            )
+            )}
+          </div>
+
+          <div style={{float:"right",flexDirection:"row",marginLeft:40}}>
+            {" "}
+              Price-Order:{["Ascending","Descending"].map(order=>(
+                <button onClick={()=>this.handleSort(order)}style={{padding:10}}>{order}</button>
+              )
+              )}
+            
+            </div>
+                <div>
                 <form className="form-inline">
                         <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Category</label>
-                        <select name="category" onChange={(e) => this.setState({ category: e.target.value })} className="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                        <option value=""></option>
+                        <select name="category" onChange={this.handleChange} className="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                        <option value="all">All</option>
                         <option value="cotton">Cotton</option>
                         <option value="fancy">Fancy</option>
                         <option value="silk">Silk</option>
                         </select>
-                        <label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">Sort</label>
-                        <select name="sort" onChange={(e) => this.setState({ sort: e.target.value })} className="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                        <option value=""></option>
-                        <option value="asc">asc</option>
-                        <option value="desc">Desc</option>
-                        </select>
-                        <button onClick={this.handleClick} type="submit" className="btn btn-primary my-1">Submit</button>
-                    </form>
-                <div class="row p-5">
-                    
-                        {items && items.map(item =>(
-                            <UserCard image = {item.image} price={item.price} category={item.category}/>
-                        ))}
-                
+                        <button onClick={this.handleClick} type="submit" className="btn btn-light text-light my-1">Submit</button>
+                    </form> 
                     </div>
+                    <div class="row p-5">
+                    {items && items.filter(({rating,category})=>{
+                         if(!this.state.cat){
+                              return rating>=ratingFilter 
+                         }
+                         if(this.state.cat){
+                             return rating>=ratingFilter && category==categoryFilter
+                         }
+                        }).sort((a,b)=>{
+                            
+                            if(costForFilter===null){
+                            return 0;
+                            }
+                            if(costForFilter==='Ascending'){
+                            return a.price-b.price;
+                            }
+                            if(costForFilter==='Descending'){
+                            return b.price-a.price;
+                            }
+                            
+                        })
+                            .map(item =>(
+                            <UserCard image = {item.image} price={item.price} category={item.category}/>
+                    ))}
+            
+                </div>
+
                 </div>
                 <nav aria-label="...">
                     <ul className="pagination float-right">
@@ -113,13 +190,15 @@ export class Home extends Component {
 const mapStateToProps = state => {
     return{
     items : state.item.items,
-    loggedUser : state.userauth.logUser || state.adminauth.logUser
+    loggedUser : state.userauth.logUser || state.adminauth.logUser,
+    filterdata: state.item.filterdata
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchItems: (n) => dispatch(fetchItems(n))
+        fetchItems: (n) => dispatch(fetchItems(n)),
+        filter: (n)=>dispatch(filter(n))
       };
 }
 

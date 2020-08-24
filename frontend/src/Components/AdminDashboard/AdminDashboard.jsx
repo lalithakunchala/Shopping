@@ -22,7 +22,7 @@ export class AdminDashboard extends PureComponent {
         this.props.fetchAdminItems(this.props.logSuccess.token)
     }
 
-    componentWillUpdate(prev){
+    componentDidUpdate(){
         this.props.fetchAdminItems(this.props.logSuccess.token)
     }
 

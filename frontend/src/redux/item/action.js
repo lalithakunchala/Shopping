@@ -1,6 +1,13 @@
 import axios from "axios";
-import {ADD_REQUEST,ADD_SUCCESS,ADD_FAILURE,FETCH_ITEM_REQUEST,FETCH_ITEM_SUCCESS,FETCH_ITEM_FAILURE,FETCH_ADMIN_ITEM_REQUEST,FETCH_ADMIN_ITEM_SUCCESS,FETCH_ADMIN_ITEM_FAILURE,UPDATE_REQUEST,UPDATE_SUCCESS,UPDATE_FAILURE,DELETE_REQUEST,DELETE_SUCCESS,DELETE_FAILURE} from './actionTypes'
+import {FILTER,ADD_REQUEST,ADD_SUCCESS,ADD_FAILURE,FETCH_ITEM_REQUEST,FETCH_ITEM_SUCCESS,FETCH_ITEM_FAILURE,FETCH_ADMIN_ITEM_REQUEST,FETCH_ADMIN_ITEM_SUCCESS,FETCH_ADMIN_ITEM_FAILURE,UPDATE_REQUEST,UPDATE_SUCCESS,UPDATE_FAILURE,DELETE_REQUEST,DELETE_SUCCESS,DELETE_FAILURE} from './actionTypes'
 
+const filter = (res)=>{
+  console.log("filetr"+ res)
+  return{
+    type: FILTER,
+    payload:res
+  }
+}
 
 const addRequest = () => {
   console.log("fetch add request");
@@ -88,7 +95,7 @@ const fetchItems= (n) => {
   return dispatch => {
       dispatch(fetchItemRequest())
       return  axios.get(
-          `http://localhost:8000/items?page=${n.page}&sort=${n.sort}&category=${n.category}`
+          `http://localhost:8000/items?page=${n}`
             ).then(res=>{
           console.log("response success", res.data);
           return dispatch(fetchItemSuccess(res.data));
@@ -225,4 +232,4 @@ const deleteItem= (id) => {
   }
 }
 
-export {fetchItems,updateItem,deleteItem,fetchAdminItems,addItem}
+export {fetchItems,updateItem,deleteItem,fetchAdminItems,addItem,filter}

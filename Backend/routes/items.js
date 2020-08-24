@@ -39,28 +39,12 @@ var router = express.Router();
 
 router.get('/', function(req, res){
     console.log('getting all items');
+    console.log(req.query)
     let page = req.query.page && req.query.page > 1 ? req.query.page : 1;
-        let sort = req.query.sort
-        let cat = req.query.category
-        if(cat){
-            Item.find({category:cat})
-            .limit(10)
-            .skip((page - 1) * 10)
-            .sort({"price":sort})
-            .exec(function (err, items) {
-            if (err) {
-                res.send("error has occured");
-            } else {
-                console.log(items);
-                res.json(items);
-            }
-            });
-        }
-        else{
+            
         Item.find({})
             .limit(10)
             .skip((page - 1) * 10)
-            .sort({"price":sort})
             .exec(function (err, items) {
             if (err) {
                 res.send("error has occured");
@@ -70,7 +54,7 @@ router.get('/', function(req, res){
             }
             });
         }
-});
+);
 
 router.get('/:id', function(req, res){
     console.log('getting all items');
