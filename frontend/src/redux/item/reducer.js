@@ -4,8 +4,9 @@ const initialState = {
     error: false,
     items:[],
     update:"",
-    delete :"",
+    del :"",
     token : "",
+    add:"",
     filterdata:{page:1,category:"",sort:"asc"},
     adminItems:[]
 }
@@ -32,7 +33,7 @@ export default (state = initialState, { type, payload }) => {
 
             case ADD_SUCCESS:
                 console.log(payload);
-            return { ...state}
+            return { ...state,add:payload}
 
             case ADD_FAILURE:
             return { ...state }
@@ -64,7 +65,7 @@ export default (state = initialState, { type, payload }) => {
 
             case DELETE_SUCCESS:
                 console.log(payload);
-            return { ...state}
+            return { ...state,del:payload}
 
             case DELETE_FAILURE:
             return { ...state }

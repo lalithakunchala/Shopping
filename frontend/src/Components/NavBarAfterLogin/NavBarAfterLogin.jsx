@@ -21,8 +21,7 @@ export class NavBarAfterLogin extends Component {
                 <Navbar.Collapse id="responsive-navbar-nav">
                   <Nav className="ml-auto align-middle">
                   <Link to="/"><button  className="sec btn text-light">Home</button></Link>
-                    <Link to="/admindashboard"><NavDropdown title={loggedUser} className="sec" id="collasible-nav-dropdown">
-                    </NavDropdown></Link>
+                  <Link to="/admindashboard"><button  className="sec btn text-light">{loggedUser}</button></Link>
                     <Link to="/cart"><button  className="sec btn text-light">cart</button></Link>
                     <Link to="/order"><button  className="sec btn text-light">order</button></Link>
                     <Link to="/"><button onClick={()=>this.props.logout()} className="sec btn text-light">Logout</button></Link>

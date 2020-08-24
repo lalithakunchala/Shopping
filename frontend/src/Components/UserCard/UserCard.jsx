@@ -17,6 +17,7 @@ export class UserCard extends Component {
                 <div class="card col-3 " >
                         <img style={{maxHeight:"300px",minHeight:"300px"}} src={this.props.image} class="card-img-top" alt="..."/>
                         <div class="card-body">
+                        <p>Rating: {this.props.rating}</p>
                         <h5 class="card-title">{this.props.category} saree</h5>
                         <h5 className="text-success">Rs: {this.props.price}/-</h5>
                         {/* <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> */}

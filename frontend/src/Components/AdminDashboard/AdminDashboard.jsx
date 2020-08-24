@@ -14,7 +14,9 @@ export class AdminDashboard extends PureComponent {
         this.state = {
             update :false,
             price:0,
-            id:""
+            id:"",
+            initial:false,
+            itemupdate:false
         }
     }
     
@@ -23,19 +25,38 @@ export class AdminDashboard extends PureComponent {
     }
 
     componentDidUpdate(){
+        if(this.state.initial){
         this.props.fetchAdminItems(this.props.logSuccess.token)
+        }
+        else{
+            this.props.fetchAdminItems(this.props.logSuccess.token)  
+        }
     }
 
-    handleUpdate = ()=>{
+    
+
+    handleUpdate = (e)=>{
         this.setState({
-            update : true
+            update : !this.state.update,
+            id : e.target.id,
+            initial:false,
+            itemupdate:false
         })
+    }
+
+    handleUpd = (e)=>{
+        this.setState({
+            update : !this.state.update,
+            initial:true,
+            itemupdate:false
+        })
+        this.props.updateItem(this.state)
     }
 
     handleChange = (e)=>{
         this.setState({
             price:e.target.value,
-            id: e.target.id
+            initial:false
         })
     }
 
@@ -50,30 +71,34 @@ export class AdminDashboard extends PureComponent {
             <div>
                 <NavBarAfterLogin />
                 <Link to="/additem"><button>Add saree</button></Link>
-
-                {adminItems?
-                adminItems.map((item,index) =>(<div>
-                <div class="card col-3">
-                        <img src={item.image} class="card-img-top" alt="..."/>
-                        <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                <p class="card-text"><small class="text-muted">price:{item.price}</small></p>
-                        <div class="card-text">
-                        <button onClick={this.handleUpdate}>Update</button>
-                        <button onClick={()=>{this.props.deleteItem(item._id)}}>Delete</button>
-                        </div>
-                        </div>
-                        {this.state.update?
+                {this.state.update?
                         <div>
-                            <input type="text" id={item._id} onChange={this.handleChange} placeholder="price"/>
-                            <button  onClick={()=>{this.props.updateItem(this.state)}}>Update</button>
+                            <input type="text"  onChange={this.handleChange} placeholder="price"/>
+                            <button  onClick={this.handleUpd}>Update</button>
                         </div>
                         :
                         ""
                         }
+                       {this.state.itemupdate? <div>{this.props.update && this.props.update.message}</div>:""}
+                    <div className="container">
+                    <div class="row p-5">
+                        {adminItems && adminItems.map((item,index) =>(
+                            <div class="card col-3 " >
+                            <img style={{maxHeight:"300px",minHeight:"300px"}} src={item.image} class="card-img-top" alt="..."/>
+                            <div class="card-body">
+                            <p>Rating: {item.rating}</p>
+                            <h5 class="card-title">{item.category} saree</h5>
+                            <h5 className="text-success">Rs: {item.price}/-</h5>
+                            {/* <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> */}
+                            <button id={item._id} onClick={this.handleUpdate}>Update</button>
+                            <button onClick={()=>{this.props.deleteItem(item._id)}}>Delete</button>
+                            </div>
+                        </div>
+                        ))}
+                        
                     </div>
-                </div>))
-                : ""}
+                    </div>
+                
                 <Footer />
             </div>
         )
@@ -85,7 +110,9 @@ const mapStateToProps = (state) => ({
     
         items : state.item.items,
         adminItems : state.item.adminItems,
-        logSuccess : state.adminauth.logSuccess
+        logSuccess : state.adminauth.logSuccess,
+        update : state.item.update,
+        del : state.item.del
 })
 
 const mapDispatchToProps = dispatch => {

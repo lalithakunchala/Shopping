@@ -1,4 +1,4 @@
-import React, { Component,PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import NavBar from '../Navbar/NavBar.jsx';
 import NavBarAfterLogin from '../NavBarAfterLogin/NavBarAfterLogin';
@@ -25,17 +25,7 @@ export class Home extends PureComponent {
         this.props.fetchItems(this.state.page)
     }
 
-    componentDidUpdate(){
-        console.log("componentdidupdate")
-        console.log(this.props.filterdata)
-        if(this.state.initial!==true){
-            this.props.fetchItems(this.state.page)
-            }
-          else{
-            console.log("initial state");
-            
-          }
-    }
+    
 
     handleChange = (e)=>{
         console.log(e.target.value)
@@ -78,14 +68,6 @@ export class Home extends PureComponent {
             this.props.fetchItems(Number(e.target.value))
         }
         
-    }
-
-    handleClick = ()=>{
-        console.log(this.state);
-        this.props.filter(this.state)
-        this.setState({
-            initial:false 
-        })
     }
 
     
@@ -168,7 +150,7 @@ export class Home extends PureComponent {
                             
                         })
                             .map(item =>(
-                            <UserCard image = {item.image} price={item.price} category={item.category}/>
+                            <UserCard image = {item.image} price={item.price} rating={item.rating} category={item.category}/>
                     ))}
             
                 </div>

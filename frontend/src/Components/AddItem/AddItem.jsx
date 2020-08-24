@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import styles from './AddItem.module.css'
 import {addItem} from '../../redux/item/action'
 import {Redirect} from "react-router-dom"
-import { NavBarAfterLogin } from '../NavBarAfterLogin/NavBarAfterLogin'
+import  NavBarAfterLogin  from '../NavBarAfterLogin/NavBarAfterLogin'
 
 export class AddItem extends Component {
 
@@ -14,13 +14,16 @@ export class AddItem extends Component {
             image:"",
             price:0,
             rating:0,
-            enter :false
+            enter :false,
+            itemadd:false
         }
     }
     
     handleChange = (e)=>{
         this.setState({
-            [e.target.name]:e.target.value
+            [e.target.name]:e.target.value,
+            enter:false,
+            itemadd:false
         })
     }
 
@@ -28,6 +31,9 @@ export class AddItem extends Component {
         if(this.state.category!==""&& this.state.price!==""&&this.state.image!==""&&this.state.rating!==""){
             console.log(this.props.token)
             this.props.addItem(this.state,this.props.token)
+            this.setState({
+                itemadd:true
+            })
         }
         else{
             this.setState({
@@ -62,6 +68,7 @@ export class AddItem extends Component {
                         </div>
                         </div>
                     </div>
+                    <div>{this.props.add && this.props.add.message}</div>
             </div>
         )
     }
@@ -69,7 +76,9 @@ export class AddItem extends Component {
 
 const mapStateToProps = (state) => ({
     token : state.adminauth.token,
-    logSuccess : state.adminauth.logSuccess
+    logSuccess : state.adminauth.logSuccess,
+    add:state.item.add,
+    loggedUser : state.adminauth.logUser
 })
 
 const mapDispatchToProps = dispatch=>{
