@@ -95,7 +95,7 @@ export class Home extends PureComponent {
                 
                 <div className={styles.height_img}>
                     <div style={{paddingTop:"200px",paddingRight:"1100px"}}>
-                    <h1 className=" text-light justify-content-bottom  fnt"><span className={styles.fnt}>Latest Designs<br/>Trendy</span></h1>
+                    <h1 className=" text-light justify-content-bottom  fnt"><span className={styles.fnt}>Trendy &<br/>Latest Designs</span></h1>
                     </div>
                 </div> 
                 <div className="container">
