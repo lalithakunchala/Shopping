@@ -141,10 +141,10 @@ export class Home extends PureComponent {
                             if(costForFilter===null){
                             return 0;
                             }
-                            if(costForFilter==='Ascending'){
+                            if(costForFilter==='low-high'){
                             return a.price-b.price;
                             }
-                            if(costForFilter==='Descending'){
+                            if(costForFilter==='high-low'){
                             return b.price-a.price;
                             }
                             
