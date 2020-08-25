@@ -33,7 +33,7 @@ app.use('/items' ,items);
 app.use('/user' ,user);
 app.use('/admin' ,admin);
 
-var port = procees.env.PORT||8000;
+var port = process.env.PORT||8000;
 
 if(process.env.NODE_ENV === "production"){
 

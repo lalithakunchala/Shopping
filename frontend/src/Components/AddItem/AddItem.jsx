@@ -75,7 +75,7 @@ export class AddItem extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    token : state.adminauth.token,
+    token : state.adminauth.logSuccess.token,
     logSuccess : state.adminauth.logSuccess,
     add:state.item.add,
     loggedUser : state.adminauth.logUser

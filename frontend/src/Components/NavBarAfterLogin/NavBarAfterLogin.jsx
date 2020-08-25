@@ -22,8 +22,6 @@ export class NavBarAfterLogin extends Component {
                   <Nav className="ml-auto align-middle">
                   <Link to="/"><button  className="sec btn text-light">Home</button></Link>
                   <Link to="/admindashboard"><button  className="sec btn text-light">{loggedUser}</button></Link>
-                    <Link to="/cart"><button  className="sec btn text-light">cart</button></Link>
-                    <Link to="/order"><button  className="sec btn text-light">order</button></Link>
                     <Link to="/"><button onClick={()=>this.props.logout()} className="sec btn text-light">Logout</button></Link>
                     
                     <button type="button" className="btn btn-outline-light font-weight-bold"  style={{fontSize:".70em",}}>About Us</button>

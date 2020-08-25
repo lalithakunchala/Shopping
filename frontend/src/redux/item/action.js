@@ -50,7 +50,7 @@ const addItem= (n,t) => {
     }
   }
   console.log("data",data);
-  console.log("token",t)
+  console.log("token",token)
   return dispatch => {
       dispatch(addRequest())
       return  axios.post(
