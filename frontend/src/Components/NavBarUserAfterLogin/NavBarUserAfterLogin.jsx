@@ -4,7 +4,7 @@ import { Navbar, Nav, NavDropdown, Button, NavbarBrand, } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import {logout} from '../../redux/userauth/action'
 
-export class NavBarAfterLogin extends Component {
+export class NavBarUserAfterLogin extends Component {
     
     render() {
       console.log(this.props.loggedUser)
@@ -21,7 +21,7 @@ export class NavBarAfterLogin extends Component {
                 <Navbar.Collapse id="responsive-navbar-nav">
                   <Nav className="ml-auto align-middle">
                   <Link to="/"><button  className="sec btn text-light">Home</button></Link>
-                  <Link to="/admindashboard"><button  className="sec btn text-light">{loggedUser}</button></Link>
+                  <Link to="/userdashboard"><button  className="sec btn text-light">{loggedUser}</button></Link>
                     <Link to="/cart"><button  className="sec btn text-light">cart</button></Link>
                     <Link to="/order"><button  className="sec btn text-light">order</button></Link>
                     <Link to="/"><button onClick={()=>this.props.logout()} className="sec btn text-light">Logout</button></Link>
@@ -36,7 +36,7 @@ export class NavBarAfterLogin extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    loggedUser :  state.adminauth.logUser
+    loggedUser : state.userauth.logUser
 })
 
 const mapDispatchToProps = dispatch => {
@@ -45,4 +45,4 @@ const mapDispatchToProps = dispatch => {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBarAfterLogin)
+export default connect(mapStateToProps, mapDispatchToProps)(NavBarUserAfterLogin)

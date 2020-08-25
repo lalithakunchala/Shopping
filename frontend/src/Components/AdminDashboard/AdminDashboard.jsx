@@ -22,6 +22,9 @@ export class AdminDashboard extends PureComponent {
     
     componentDidMount(){
         this.props.fetchAdminItems(this.props.logSuccess.token)
+        this.setState({
+            initial:false
+        })
     }
 
     componentDidUpdate(){

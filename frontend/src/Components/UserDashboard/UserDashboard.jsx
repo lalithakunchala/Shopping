@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import NavBarAfterLogin from '../NavBarAfterLogin/NavBarAfterLogin';
+import NavBarUserAfterLogin from '../NavBarUserAfterLogin/NavBarUserAfterLogin';
 import logout from '../../redux/userauth/action'
 import Footer from '../Footer/Footer'
 import  UserCard  from '../UserCard/UserCard';
@@ -87,7 +87,7 @@ export class UserDashboard extends Component {
         
         return (
             <div>
-                <NavBarAfterLogin />
+                <NavBarUserAfterLogin />
                
                 <div className="container">
 

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import NavBar from '../Navbar/NavBar.jsx';
-import NavBarAfterLogin from '../NavBarAfterLogin/NavBarAfterLogin';
+import NavBarUserAfterLogin from '../NavBarUserAfterLogin/NavBarUserAfterLogin';
 import styles from './Home.module.css'
 import Footer from '../Footer/Footer'
 import {fetchItems,filter} from '../../redux/item/action.js' 
@@ -91,7 +91,7 @@ export class Home extends PureComponent {
 
         return (
             <div>
-                {!this.props.loggedUser?<NavBar />:<NavBarAfterLogin />}
+                {!this.props.loggedUser?<NavBar />:<NavBarUserAfterLogin />}
                 
                 <div className={styles.height_img}>
                     <div style={{paddingTop:"200px",paddingRight:"1100px"}}>
