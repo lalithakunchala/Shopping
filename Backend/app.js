@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
+const path = require('path')
 
 const mongoose = require("mongoose");
 //local
 // mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});
 //remote 
-mongoose.connect('mongodb+srv://mongo_lalitha:lalitha@89@mongooseappcluster.leuky.mongodb.net/mongooseAppDB', {useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URI||'mongodb+srv://mongo_lalitha:lalitha@89@mongooseappcluster.leuky.mongodb.net/mongooseAppDB', {useNewUrlParser: true});
 
 // mongodb+srv://mongo_lalitha:<password>@mongooseappcluster.leuky.mongodb.net/<dbname>?retryWrites=true&w=majority
 const db = mongoose.connection;
@@ -32,7 +33,17 @@ app.use('/items' ,items);
 app.use('/user' ,user);
 app.use('/admin' ,admin);
 
-var port = 8000;
+var port = procees.event.PORT||8000;
+
+if(process.env.NODE_ENV === "production"){
+
+  app.use(express.static('../frontend/build'))
+
+  app.get('*',(req,res)=>{
+    res.sendFile(path.join(__dirname,'..','frontend','build','index.html'));
+  })
+}
+
 app.listen(port, function(){
     console.log('app listening on port: '+port);
 });
