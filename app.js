@@ -33,14 +33,14 @@ app.use('/items' ,items);
 app.use('/user' ,user);
 app.use('/admin' ,admin);
 
-var port = procees.event.PORT||8000;
+var port = procees.env.PORT||8000;
 
 if(process.env.NODE_ENV === "production"){
 
-  app.use(express.static('../frontend/build'))
+  app.use(express.static('frontend/build'))
 
   app.get('*',(req,res)=>{
-    res.sendFile(path.join(__dirname,'..','frontend','build','index.html'));
+    res.sendFile(path.join(__dirname,'frontend','build','index.html'));
   })
 }
 

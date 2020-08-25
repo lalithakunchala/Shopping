@@ -37,7 +37,7 @@ const addFailure = error => {
 
 
 const addItem= (n,t) => {
-  var token =  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibGFsaXRoYSIsImlkIjoiNWYzZGRmOTZjM2VjYzAxOGM0NjI2MDMxIiwiaWF0IjoxNTk4MTY4ODQ5fQ.ugQHHXwqjULYD9jurJsHtH_9CX0ixS64mITWFsQ3CYM" || t
+  var token =  t
   var data = {
     "category" : n.category,
     "price" : n.price,
