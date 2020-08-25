@@ -28,9 +28,7 @@ export class AdminDashboard extends PureComponent {
         if(this.state.initial){
         this.props.fetchAdminItems(this.props.logSuccess.token)
         }
-        else{
-            this.props.fetchAdminItems(this.props.logSuccess.token)  
-        }
+        
     }
 
     
