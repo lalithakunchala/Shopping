@@ -9,7 +9,6 @@ const mongoose = require("mongoose");
 //remote 
 mongoose.connect(process.env.MONGODB_URI|| mongouri, {useNewUrlParser: true});
 
-// mongodb+srv://mongo_lalitha:<password>@mongooseappcluster.leuky.mongodb.net/<dbname>?retryWrites=true&w=majority
 const db = mongoose.connection;
 db.on('error', function(){
     console.log("couldn't connect to db");
