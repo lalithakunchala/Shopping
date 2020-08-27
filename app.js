@@ -1,12 +1,13 @@
 const express = require("express");
 const app = express();
-const path = require('path')
+const path = require('path');
+const mongouri = require('./config.js')
 
 const mongoose = require("mongoose");
 //local
 // mongoose.connect('mongodb://localhost/test', {useNewUrlParser: true});
 //remote 
-mongoose.connect(process.env.MONGODB_URI||'mongodb+srv://mongo_lalitha:lalitha@89@mongooseappcluster.leuky.mongodb.net/mongooseAppDB', {useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URI|| mongouri, {useNewUrlParser: true});
 
 // mongodb+srv://mongo_lalitha:<password>@mongooseappcluster.leuky.mongodb.net/<dbname>?retryWrites=true&w=majority
 const db = mongoose.connection;
