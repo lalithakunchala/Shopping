@@ -1,0 +1,1 @@
+export const MONGOURI = 'mongodb+srv://mongo_lalitha:lalitha@89@mongooseappcluster.leuky.mongodb.net/mongooseAppDB'

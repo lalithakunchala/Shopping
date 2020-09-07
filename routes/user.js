@@ -60,6 +60,21 @@ router.post("/register", function (req, res) {
     }
   });
 });
+
+router.patch('/:id', function(req, res){
+  console.log('patch backend');
+  console.log(req.params.id,req.body.price);
+  Item.Update({_id:req.params.id}, {$push:{ order:req.body}},function(err, items){
+      if(err) {
+          res.json({success:"false",message:"error while pushing"});
+      } else {
+          console.log(items);
+          res.json({success:"true",message:"order added"});
+      }
+  });
+});
+
+
 module.exports = router;
 
    
